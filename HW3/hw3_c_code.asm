@@ -16,12 +16,37 @@ mfhi	$tmp
 or	$arg0, $arg0, $tmp
 .end_macro
 
+# Macro : read_integer(<$reg1>)
+# Usage : read_integer(<register to store integer>)
+.macro	read_integer($reg1)
+move	$t0, $v0
+li	$v0, 5
+syscall
+move	$reg1, $v0
+move	$v0, $t0
+.end_macro
+
+# Macro : print_string($str)
+# Usage : print_string(<string to print>)
+.macro	print_string($str)
+move	$t0, $a0
+la	$a0, $str
+li	$v0, 4
+syscall
+move	$a0, $t0
+.end_macro
+
+.data
+str1: 	.asciiz 	"Enter Base: "
+str2:	.asciiz		"Enter Exponent: "
 
 .text
 .globl main
-main:
-addi	$a0, $zero, 3
-addiu	$a1, $zero, 7
+main: 
+print_string(str1)
+read_integer($a0)
+print_string(str2)
+read_integer($a1)
 jal	power
 
 # Prepare to print result
@@ -86,7 +111,7 @@ mflo	$v0
 mfhi	$t0
 or	$v0, $v0, $t0
 lw	$ra, 0($sp)
-addi	$ra, $ra, 4	# Will this skip the next instruction?
+addi	$ra, $ra, 4
 add	$sp, $sp, 4
 add 	$fp, $sp, 4
 j	restore_and_return
@@ -95,7 +120,6 @@ cond_3:
 addi	$sp, $sp, -12
 sw	$ra, 0($sp)
 sw	$a1, 4($sp)
-# div	$a1, $a1, 2 # test this
 addi	$fp, $sp, 12
 jal 	power
 sw	$v0, 8($sp)
