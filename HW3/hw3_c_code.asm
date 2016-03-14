@@ -7,11 +7,21 @@
 # }
 # TODO: Add fuctionality when for the tertiary condition
 
+# Macro : mult_load($arg0, $arg1, $arg2, $tmp)
+# Usage : mult_load(<store values>, <mult value 1>, <mult value 2>, <temp register to store hi>)
+.macro 	mult_load($arg0, $arg1, $arg2, $tmp)
+mult	$arg1, $arg2
+mflo	$arg0
+mfhi	$tmp
+or	$arg0, $arg0, $tmp
+.end_macro
+
+
 .text
 .globl main
 main:
-addi	$a0, $zero, 2
-addiu	$a1, $zero, 9
+addi	$a0, $zero, 3
+addiu	$a1, $zero, 5
 jal	power
 
 # Prepare to print result
@@ -82,5 +92,19 @@ add 	$fp, $sp, 4
 j	restore_and_return
 
 cond_3:
-li	$a1, 1		# Temporary store to check if the values are proper
+addi	$sp, $sp, -12
+sw	$ra, 0($sp)
+sw	$a1, 4($sp)
+div	$a1, $a1, 2
+addi	$fp, $sp, 12
+jal 	power
+sw	$v0, 8($sp)
+jal	power
+lw	$t0, 8($sp)
+mult_load	$v0, $v0, $t0, $t1
+mult_load	$v0, $v0, $a0, $1
+lw	$ra, 0($sp)
+lw	$a1, 4($sp)
+addi	$sp, $sp, 12
+addi	$fp, $sp, 12
 jr	$ra
