@@ -21,7 +21,7 @@ or	$arg0, $arg0, $tmp
 .globl main
 main:
 addi	$a0, $zero, 3
-addiu	$a1, $zero, 5
+addiu	$a1, $zero, 7
 jal	power
 
 # Prepare to print result
@@ -95,7 +95,7 @@ cond_3:
 addi	$sp, $sp, -12
 sw	$ra, 0($sp)
 sw	$a1, 4($sp)
-div	$a1, $a1, 2
+# div	$a1, $a1, 2 # test this
 addi	$fp, $sp, 12
 jal 	power
 sw	$v0, 8($sp)
