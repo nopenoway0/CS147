@@ -44,7 +44,6 @@ li	$t0, 2
 div	$a1, $t0
 mflo	$a1
 mfhi	$t0		# Already stored argument to stack so this works
-addi	$sp, $sp, 4
 beqz	$t0, cond_2	# cond 2 met
 jal	cond_3
 
