@@ -19,8 +19,15 @@ When grabbing from addresses, make a pointer then navigate through the address u
 for an unsigned intenger of 256, the first byte[0] will read 128, byte[1] will read 1 and the rest of the bytes will read 0
 */
 int toBinary(float a){
-unsigned int t = 256;
+unsigned int t = 1;
 char* pter = (char*) &t;
-unsigned char b = pter[1];
-printf("int a: %.0f | char pointer: %d", a, b);
+unsigned char b = pter[0];
+while(b != 0){
+    char tmp = b * 2;
+    b = b << 1;
+    if(tmp != b){
+       printf("1");
+    }
+    else printf("0");
+}
 }
