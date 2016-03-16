@@ -29,7 +29,7 @@ int toBinary(float a){
     unsigned char b;
     int storage;
     int bin;
-    for(int x = 0; x < 4; x++){
+    for(int x = 4; x > 0; x--){
     b = pter[x];
     int bin = 0;
     storage = (int) b;
@@ -45,9 +45,9 @@ int toBinary(float a){
         --zeros;
     }
     }
-    else for(int y = 0; y < 7; y++){
+    /*else for(int y = 0; y < 7; y++){
         printf("0");
-    }
+    }*/
     printf("%d", bin);
     }
     return 1;
