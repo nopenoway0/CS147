@@ -10,11 +10,12 @@
 #include <math.h>
 
 int toBinary(float a);
+void printByteBinary(unsigned char a);
 
 int main(){
     printf("Entering Program\n");
     float a = -5;
-    int a_bin = toBinary(a);
+    toBinary(a);
     printf("\nExiting Program\n");
     return 1;
 }
@@ -25,17 +26,21 @@ for an unsigned intenger of 256, the first byte[0] will read 128, byte[1] will r
 //Bit shift to right, until number equals 0. If number /= orignal number /2 then that means a 1 dropped off
 //Otherwise, 0 dropped off.
 int toBinary(float a){
-    char* pter = (char*) &a;
-    unsigned char b;
-    int storage;
-    int bin;
-    for(int x = 4; x > 0; x--){
-    b = pter[x];
+    unsigned int b = 32;
+    char* ptr = &b;
+    printByteBinary((char) ptr[0]);
+    //printByteBinary(a);
+    return 1;
+}
+
+void printByteBinary(unsigned char a){
     int bin = 0;
-    storage = (int) b;
+    int storage = a;
+    storage = (int) a;
+    double power;
     for(int y = 0; y < 8; y++){
-        bin += (storage % 2) * (int)pow(10, y);
-        //printf("%d", (int) pow(10, x));
+        power = pow(10, y);
+        bin +=  (storage % 2) * power ;
         storage = storage >> 1;
     }
     int zeros = 8 - (int)log((bin / 10));
@@ -49,6 +54,4 @@ int toBinary(float a){
         printf("0");
     }
     printf("%d", bin);
-    }
-    return 1;
 }
