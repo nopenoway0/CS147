@@ -45,9 +45,9 @@ int toBinary(float a){
         --zeros;
     }
     }
-    /*else for(int y = 0; y < 7; y++){
+    else for(int y = 0; y < 7; y++){
         printf("0");
-    }*/
+    }
     printf("%d", bin);
     }
     return 1;
