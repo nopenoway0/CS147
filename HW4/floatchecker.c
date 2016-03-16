@@ -27,7 +27,7 @@ for an unsigned intenger of 256, the first byte[0] will read 128, byte[1] will r
  Produces string of the proper binary, but does it backwards
 */
 int toBinary(float a){
-    unsigned int t = 2;
+    unsigned int t = 128;
     char* pter = (char*) &t;
     unsigned char b = pter[0];
     int storage;
@@ -35,8 +35,15 @@ int toBinary(float a){
     storage = (int) b;
     for(int x = 0; x < 8; x++){
         bin += (storage % 2) * (int)pow(10, x);
-        //printf("%d", storage % 2);
+        //printf("%d", (int) pow(10, x));
         storage = storage >> 1;
     }
+//Add proper zeros before the print
+    int zeros = 8 - (int)log((bin / 10));
+    while(zeros > 1){
+        printf("0");
+        --zeros;
+    }
+    printf("%d", bin);
     printf("\nExiting Program\n");
 }
