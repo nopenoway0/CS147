@@ -40,10 +40,10 @@ void PrintToBinary(float a){;
 void ConvertToBinary(float a){
     unsigned char sign;
     unsigned char exponent = 0;
-    unsigned int fraction;
-    int tmp_bit = a;
+    int tmp_bit;
     float remainder;
-    // Set Sign of number
+    char bin_fraction[32] = "0";
+    // Get sign
     if(a >= 0){
         sign = 0;
     }
@@ -51,13 +51,21 @@ void ConvertToBinary(float a){
         sign = 1;
         a *= -1;
     }
-    //Change the float to binary
+    tmp_bit = a;
+    // Get fraction
+    while(remainder > 0){
+        remainder = a / 1;
+        remainder = a - remainder;
+        if(remainder > 0){
+            a *= 10;
+        }
+    }
     remainder = a / 1;
     remainder = a - remainder;
     if(remainder > 0){
-        a *= 10
+        a *= 10;
     }
-    // Convert float to decimal
+    // Find the exponent without bias
     while(tmp_bit > 1){
         tmp_bit = tmp_bit >> 1;
         exponent++;
