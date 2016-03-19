@@ -16,6 +16,7 @@ int main(){
     printf("Entering Program\n");
     float a = -5.25;
     PrintToBinary(a);
+    printf("\n");
     ConvertToBinary(a);
     printf("\nExiting Program\n");
     return 1;
@@ -47,13 +48,31 @@ void ConvertToBinary(float a){
     char bin_fraction[32] = "0";
     // Get sign
     if(a >= 0){
-        sign = 0;
+        bin_fraction[0] = 0;
     }
     else{
-        sign = 1;
+        bin_fraction[0] = 1;
         a *= -1;
     }
-    // Get Whole number and fraction set tmp_bit for the calculations without changing whole_number
+    count++;
+    //Prep for finding exponent
+    tmp_bit = a;
+    // Find the exponent without bias
+    while(tmp_bit > 1){
+        tmp_bit = tmp_bit >> 1;
+        exponent++;
+    }
+    //Add bias
+    exponent += 127;
+    //Convert exponent to binary
+    tmp_bit = exponent;
+    count = 8;
+    while(tmp_bit != 0 && count > 0){
+        bin_fraction[count] = tmp_bit % 2;
+        tmp_bit = tmp_bit / 2;
+        count--;
+    }
+    count = 8;
     // TODO: can change to not use tmp_bit
     whole_number = (int) a;
     fraction = a - (float) whole_number;
@@ -71,24 +90,9 @@ void ConvertToBinary(float a){
         if(bin_fraction[count] == 1) fraction -= 1;
         count++;
     }
-    //Prep for finding exponent
-    tmp_bit = a;
-    // Find the exponent without bias
-    while(tmp_bit > 1){
-        tmp_bit = tmp_bit >> 1;
-        exponent++;
-    }
-    //Add bias
-    exponent += 127;
-    //Convert exponent to binary
-    tmp_bit = exponent;
-    while(tmp_bit != 0){
-        
-    }
-    printf("\n%d|%d|%d|%.4f\n", sign, exponent + 127, whole_number, fraction);
     // Increment count by 1 to not print the 1's place in IEEE notation
-    count = 1;
-    while(count < 32){
+    count = 0;
+    while(count < 31){
         printf("%d",bin_fraction[count]);
         count++;
     }
