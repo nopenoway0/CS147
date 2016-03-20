@@ -14,9 +14,13 @@ void ConvertToBinary(float a);
 
 int main(){
     printf("Entering Program\n");
-    float a = -5.25;
+    float a;
+    printf("Enter float to convert: ");
+    scanf("%f",&a);
+    printf("Printing bits from memory: ");
     PrintToBinary(a);
     printf("\n");
+    printf("Printing float to binary:  ");
     ConvertToBinary(a);
     printf("\nExiting Program\n");
     return 1;
@@ -30,8 +34,8 @@ void PrintToBinary(float a){;
     int bit;
 
     for(int x = num_loops; x > 0; x--){
-        bit = *ptr & 1<<x;              //
-        if(bit != 0){
+        bit = *ptr & 1<<x;              // Shift 1 bit, to the x place. AND it with the current value. If the current value there is also 1, the and stays 1, if it is zero, then bit is set to zero
+        if(bit != 0){                   // due to the AND. Check result in the bit field, and if 1 just print it, if 0 just print it.
             printf("1");
         }
         else printf("0");
@@ -72,10 +76,10 @@ void ConvertToBinary(float a){
         tmp_bit = tmp_bit / 2;
         count--;
     }
-    count = 8;
+    count = 9;
     // TODO: can change to not use tmp_bit
     whole_number = (int) a;
-    fraction = a - (float) whole_number;
+    fraction = a - whole_number;
     tmp_bit = whole_number;
     // Convert Whole Number into Binary, greatest -> least in bin_fraction
     while(tmp_bit != 0 && count < 32){
@@ -92,8 +96,13 @@ void ConvertToBinary(float a){
     }
     // Increment count by 1 to not print the 1's place in IEEE notation
     count = 0;
-    while(count < 31){
+    while(count < 9){
         printf("%d",bin_fraction[count]);
         count++;
+    }
+    count ++;
+    while(count < 32){
+    printf("%d",bin_fraction[count]);
+    count++;
     }
 }
