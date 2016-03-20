@@ -50,6 +50,7 @@ void ConvertToBinary(float a){
     int whole_number;
     float fraction;
     char bin_fraction[32] = "0";
+    char temp_array[23] = "0";
     // Get sign
     if(a >= 0){
         bin_fraction[0] = 0;
@@ -76,23 +77,28 @@ void ConvertToBinary(float a){
         tmp_bit = tmp_bit / 2;
         count--;
     }
-    count = 9;
     // TODO: can change to not use tmp_bit
     whole_number = (int) a;
     fraction = a - whole_number;
     tmp_bit = whole_number;
-    // Convert Whole Number into Binary, greatest -> least in bin_fraction
-    while(tmp_bit != 0 && count < 32){
-        bin_fraction[count] = tmp_bit % 2;
+    // Convert Whole Number into Binary, store into temp array
+    count = 0;
+    while(tmp_bit != 0 && count < 23){
+        temp_array[count] = tmp_bit % 2;
         tmp_bit = tmp_bit / 2;
         count++;
     }
+
     //Convert Fraction into binary
-    while(fraction != 0 && count < 32){
+    while(fraction != 0 && count < 23){
         fraction *= 2;
-        bin_fraction[count] = (char)(int)fraction;
-        if(bin_fraction[count] == 1) fraction -= 1;
+        temp_array[count - 23] = (char)(int)fraction;
+        if(temp_array[count - 23] == 1) fraction -= 1;
         count++;
+    }
+    // Swap to actual fraction array
+    for(int x = 0; x < 23 ; x++){
+        bin_fraction[9 + x] = temp_array[x];
     }
     // Increment count by 1 to not print the 1's place in IEEE notation
     count = 0;
@@ -100,7 +106,7 @@ void ConvertToBinary(float a){
         printf("%d",bin_fraction[count]);
         count++;
     }
-    count ++;
+    //count ++;
     while(count < 32){
     printf("%d",bin_fraction[count]);
     count++;
