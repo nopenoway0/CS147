@@ -46,6 +46,7 @@ void ConvertToBinary(float a){
     unsigned char sign;
     unsigned char exponent = 0;
     short count = 0;
+    short count_2 = 0;
     int tmp_bit;
     int whole_number;
     float fraction;
@@ -96,9 +97,12 @@ void ConvertToBinary(float a){
         if(temp_array[count - 23] == 1) fraction -= 1;
         count++;
     }
+    count_2 = 9;
     // Swap to actual fraction array
-    for(int x = 0; x < 23 ; x++){
-        bin_fraction[9 + x] = temp_array[x];
+    while(count >= 0){
+        bin_fraction[count_2] = temp_array[count];
+        count--;
+        count_2++;
     }
     // Increment count by 1 to not print the 1's place in IEEE notation
     count = 0;
@@ -107,7 +111,7 @@ void ConvertToBinary(float a){
         count++;
     }
     //count ++;
-    while(count < 32){
+    while(count < 31){
     printf("%d",bin_fraction[count]);
     count++;
     }
