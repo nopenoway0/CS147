@@ -14,7 +14,7 @@ void ConvertToBinary(float a);
 
 int main(){
     printf("Entering Program\n");
-    float a;125
+    float a;
     printf("Enter float to convert: ");
     scanf("%f",&a);
     printf("Printing bits from memory: ");
@@ -45,6 +45,7 @@ void PrintToBinary(float a){;
 void ConvertToBinary(float a){
     unsigned char sign;
     unsigned char exponent = 0;
+    unsigned tmp = 0;
     short count = 0;
     short count_2 = 0;
     int tmp_bit;
@@ -99,10 +100,11 @@ void ConvertToBinary(float a){
         count++;
     }
     count_2 = 9;
+    count = 0;
     // Swap to actual fraction array
-    while(count >= 0){
+    while(count < 23){
         bin_fraction[count_2] = temp_array[count];
-        count--;
+        count++;
         count_2++;
     }
     // Increment count by 1 to not print the 1's place in IEEE notation
