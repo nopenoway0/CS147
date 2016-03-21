@@ -11,13 +11,13 @@
 
 void PrintToBinary(float a);
 void ConvertToBinary(float a);
+float stof(const char* s);
 
 int main(int argc, char**argv){
-    printf("Entering Program\n");
-    //float a = atof(argv[1]);
-    float a = atof(argv[1]);
-    //printf("Enter float to convert: ");
-    //scanf("%f",&a);
+    printf("Entering Program with arguments %s|%f\n", argv[0], stof(argv[1]));
+    float a = stof(argv[1]);
+    printf("Enter float to convert: ");
+    scanf("%f",&a);
     printf("Printing bits from memory: ");
     PrintToBinary(a);
     printf("\n");
@@ -128,3 +128,23 @@ void ConvertToBinary(float a){
     }
     printf("00"); // Has 2 less precision than reading from bits
 }
+
+float stof(const char* s){  // http://stackoverflow.com/questions/4392665/converting-string-to-float-without-atof-in-c
+    float rez = 0, fact = 1;
+    if (*s == '-'){
+        s++;
+        fact = -1;
+    };
+    for (int point_seen = 0; *s; s++){
+        if (*s == '.'){
+            point_seen = 1;
+            continue;
+        };
+        int d = *s - '0';
+        if (d >= 0 && d <= 9){
+            if (point_seen) fact /= 10.0f;
+            rez = rez * 10.0f + (float)d;
+        };
+    };
+    return rez * fact;
+};
