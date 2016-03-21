@@ -33,12 +33,13 @@ void PrintToBinary(float a){;
     int* ptr = &a;                      // Have int point to the address of the float
     int bit;
 
-    for(int x = num_loops; x > 0; x--){
-        bit = *ptr & 1<<x;              // Shift 1 bit, to the x place. AND it with the current value. If the current value there is also 1, the and stays 1, if it is zero, then bit is set to zero
+    while(num_loops > 0){
+        bit = *ptr & 1<<num_loops;              // Shift 1 bit, to the x place. AND it with the current value. If the current value there is also 1, the and stays 1, if it is zero, then bit is set to zero
         if(bit != 0){                   // due to the AND. Check result in the bit field, and if 1 just print it, if 0 just print it.
             printf("1");
         }
         else printf("0");
+        num_loops--;
     }
 }
 
