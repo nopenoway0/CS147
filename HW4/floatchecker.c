@@ -14,9 +14,10 @@ void ConvertToBinary(float a);
 
 int main(int argc, char**argv){
     printf("Entering Program\n");
-    float a = atof(argv[1]);
-   // printf("Enter float to convert: ");
-    //scanf("%f",&a);
+    //float a = atof(argv[1]);
+    float a;
+    printf("Enter float to convert: ");
+    scanf("%f",&a);
     printf("Printing bits from memory: ");
     PrintToBinary(a);
     printf("\n");
@@ -92,7 +93,12 @@ void ConvertToBinary(float a){
         tmp_bit = tmp_bit / 2;
         count++;
     }
-
+    count_2 = 9;
+    while(count >= 0){
+        bin_fraction[count_2] = temp_array[count];
+        count--;
+        count_2++;
+    }
     //Convert Fraction into binary
     while(fraction != 0 && count < 23){
         fraction *= 2;
@@ -100,21 +106,21 @@ void ConvertToBinary(float a){
         if(temp_array[count] == 1) fraction -= 1;
         count++;
     }
-    count_2 = 9;
+    tmp = count;
     count = 0;
     // Swap to actual fraction array
-    while(count < 23){
+    /*while(count < tmp){
         bin_fraction[count_2] = temp_array[count];
         count++;
         count_2++;
-    }
+    }*/
     // Increment count by 1 to not print the 1's place in IEEE notation
     count = 0;
     while(count < 9){
         printf("%d",bin_fraction[count]);
         count++;
     }
-    count ++;
+    count+=2;
     while(count < 31){
     printf("%d",bin_fraction[count]);
     count++;
