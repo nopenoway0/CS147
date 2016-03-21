@@ -12,11 +12,11 @@
 void PrintToBinary(float a);
 void ConvertToBinary(float a);
 
-int main(){
+int main(int argc, char**argv){
     printf("Entering Program\n");
-    float a;
-    printf("Enter float to convert: ");
-    scanf("%f",&a);
+    float a = atof(argv[1]);
+   // printf("Enter float to convert: ");
+    //scanf("%f",&a);
     printf("Printing bits from memory: ");
     PrintToBinary(a);
     printf("\n");
