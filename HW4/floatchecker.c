@@ -45,7 +45,7 @@ void PrintToBinary(float a){;
 void ConvertToBinary(float a){
     unsigned char sign;
     unsigned char exponent = 0;
-    unsigned tmp = 0;
+    unsigned char tmp = 0;
     short count = 0;
     short count_2 = 0;
     int tmp_bit;
@@ -95,8 +95,8 @@ void ConvertToBinary(float a){
     //Convert Fraction into binary
     while(fraction != 0 && count < 23){
         fraction *= 2;
-        temp_array[count - 23] = (char)(int)fraction;
-        if(temp_array[count - 23] == 1) fraction -= 1;
+        temp_array[count] = (int)fraction;
+        if(temp_array[count] == 1) fraction -= 1;
         count++;
     }
     count_2 = 9;
@@ -113,7 +113,7 @@ void ConvertToBinary(float a){
         printf("%d",bin_fraction[count]);
         count++;
     }
-    //count ++;
+    count ++;
     while(count < 31){
     printf("%d",bin_fraction[count]);
     count++;
