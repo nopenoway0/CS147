@@ -14,7 +14,7 @@ void ConvertToBinary(float a);
 
 int main(){
     printf("Entering Program\n");
-    float a = -5.25;
+    float a = -256.32;
     PrintToBinary(a);
     printf("\n");
     ConvertToBinary(a);
@@ -65,9 +65,10 @@ void ConvertToBinary(float a){
     //Add bias
     exponent += 127;
     //Convert exponent to binary
+    //TODO: Complete zeroes
     tmp_bit = exponent;
     count = 8;
-    while(tmp_bit != 0 && count > 0){
+    while(count > 0){
         bin_fraction[count] = tmp_bit % 2;
         tmp_bit = tmp_bit / 2;
         count--;
@@ -78,7 +79,7 @@ void ConvertToBinary(float a){
     fraction = a - (float) whole_number;
     tmp_bit = whole_number;
     // Convert Whole Number into Binary, greatest -> least in bin_fraction
-    while(tmp_bit != 0 && count < 32){
+    while(count < 32){
         bin_fraction[count] = tmp_bit % 2;
         tmp_bit = tmp_bit / 2;
         count++;
@@ -90,7 +91,7 @@ void ConvertToBinary(float a){
         if(bin_fraction[count] == 1) fraction -= 1;
         count++;
     }
-    // Increment count by 1 to not print the 1's place in IEEE notation
+    // TODO: Some values are returning incorrect fraction and exponent values
     count = 0;
     while(count < 31){
         printf("%d",bin_fraction[count]);
