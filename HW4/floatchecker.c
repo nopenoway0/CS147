@@ -15,13 +15,15 @@ float stof(const char* s);
 
 int main(int argc, char**argv){
     float  a;
+    char tester[] = "test";
     if(argc == 2){
         printf("Entering Program with arguments %s|%f\n", argv[0], stof(argv[1]));
         a = stof(argv[1]);
     }
     else if(argc < 2){
             printf("Enter float to convert: ");
-            scanf("%f",&a);
+            scanf("%s",tester);
+            a = stof(tester);
     }
     else{
         printf("Improper input format\n");
@@ -147,6 +149,7 @@ float stof(const char* s){  // http://stackoverflow.com/questions/4392665/conver
     while(*s){
         if (*s == '.'){
             point_seen = 1;
+            s++;
             continue;
         };
         int d = *s - '0';
