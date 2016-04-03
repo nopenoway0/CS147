@@ -15,13 +15,18 @@ float stof(const char* s);
 
 int main(int argc, char**argv){
     float  a;
-    if(argc >= 2){
+    char tester[] = "test";
+    if(argc == 2){
         printf("Entering Program with arguments %s|%f\n", argv[0], stof(argv[1]));
         a = stof(argv[1]);
     }
-    if(argc < 2){
+    else if(argc < 2){
             printf("Enter float to convert: ");
-            scanf("%f",&a);
+            scanf("%s",tester);
+            a = stof(tester);
+    }
+    else{
+        printf("Improper input format\n");
     }
     printf("Printing bits from memory: ");
     PrintToBinary(a);
@@ -36,7 +41,7 @@ int main(int argc, char**argv){
 //Otherwise, 0 dropped off.
 void PrintToBinary(float a){;
     int num_loops = sizeof(a) * 8 - 1;  // Sets the amount of bit shfts
-    int* ptr = &a;                      // Have int point to the address of the float
+    int* ptr = (int*)&a;                      // Have int point to the address of the float
     int bit;
 
     while(num_loops > 0){
@@ -144,6 +149,7 @@ float stof(const char* s){  // http://stackoverflow.com/questions/4392665/conver
     while(*s){
         if (*s == '.'){
             point_seen = 1;
+            s++;
             continue;
         };
         int d = *s - '0';
