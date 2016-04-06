@@ -46,6 +46,7 @@ int memmov(void* source, void* dest, int length, int size){         // void poin
     while(num_int_calls > 0){
         *four_ptr_dst = (unsigned)*four_ptr_src;
         ++four_ptr_src;
+        ++four_ptr_dst;
         --num_int_calls;
     }
     
