@@ -18,11 +18,19 @@ int main(){
     
     int* num_moved;
     
-    memmov(num_array, &num_moved, sizeof(num_array), sizeof(int));
+    memmov(num_array, &num_moved, sizeof(num_array) / sizeof(num_array[0]), sizeof(int));
 }
 
-int memmov(void* source, void* dest, int length, int size){ // void pointer to handle any argument
+/**
+ * Size of operation used to make adaptability based off int in the current system
+ */
+int memmov(void* source, void* dest, int length, int size){         // void pointer to handle any argument
     printf("Entering memmov\n");  // Implicit declaration
+    int total_bytes = length * size;                                // Counts total bytes in array
+    int num_char_calls = total_bytes % sizeof(int);                 // Amount of char calls to be needed
+    int num_int_calls = (total_bytes - num_char_calls) / sizeof(int);// Amount of int* calls needed to increment
+    
+    printf("Char calls: %d, Int Calls: %d\n", num_char_calls, num_int_calls);
     
     return 1;
 }
