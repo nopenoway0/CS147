@@ -10,21 +10,18 @@
 //  Determine by the size when to read a byte. If the it ends on an address not divisible by 4 then it can be used
 //  or read by a byte
 
-int memmov(void* source, void* dest, int length_of_mem); // Uses integer copy instead of byte
+int memmov(void* source, void* dest, int length, int size); // Uses integer copy instead of byte
 
 int main(){
-    int number = 20;
-    int number_dest = 12;
-    char t1 = 3;
     
-    //test of reading from char with an int pointer
-    int* ptr = &t1;
-    printf("%d", ptr);
+    int num_array[9] = {2, 4, 5, 3, 2, 2, 7, 6, 4};
     
-    //memmov(&number, &number_dest);
+    int* num_moved;
+    
+    memmov(num_array, &num_moved, sizeof(num_array), sizeof(int));
 }
 
-int memmov(void* source, void* dest, int length_of_mem){ // void pointer to handle any argument
+int memmov(void* source, void* dest, int length, int size){ // void pointer to handle any argument
     printf("Entering memmov\n");  // Implicit declaration
     
     return 1;
