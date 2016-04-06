@@ -14,7 +14,7 @@ int memmov(void* source, void* dest, int length, int size); // Uses integer copy
 
 int main(){
     
-    int num_array[9] = {2, 4, 5, 3, 2, 2, 7, 6, 4};
+    double num_array[9] = {2, 4, 5, 3, 2, 2, 7, 6, 4};
     
     int* num_moved;
     
@@ -29,8 +29,20 @@ int memmov(void* source, void* dest, int length, int size){         // void poin
     int total_bytes = length * size;                                // Counts total bytes in array
     int num_char_calls = total_bytes % sizeof(int);                 // Amount of char calls to be needed
     int num_int_calls = (total_bytes - num_char_calls) / sizeof(int);// Amount of int* calls needed to increment
+    int* four_ptr = (int*) source;
+    char* single_ptr;
+    while(num_int_calls > 0){
+        ++four_ptr;
+        --num_int_calls;
+    }
     
-    printf("Char calls: %d, Int Calls: %d\n", num_char_calls, num_int_calls);
+    // Character reads
+    single_ptr = (char*) four_ptr;
+    while(num_char_calls > 0){
+        ++single_ptr;
+        --num_char_calls;
+    }
+    printf("\nChar calls: %d, Int Calls: %d\n", num_char_calls, num_int_calls);
     
     return 1;
 }
