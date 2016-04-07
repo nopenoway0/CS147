@@ -16,13 +16,13 @@ int main(){
 
     int num_array[9] = {2, 4, 5, 3, 2, 2, 7, 6, 4};
 
-    int* num_moved = 5;
+    int* num_moved = malloc(sizeof(int) * 10);
 
-    return memmov(num_array, num_moved, sizeof(num_array) / sizeof(num_array[0]), sizeof(int));
+    memmov(num_array, num_moved, sizeof(num_array) / sizeof(num_array[0]), 10);
 
     int size_num_array = sizeof(num_array) / sizeof(num_array[0]);
     while(size_num_array > 0){
-        printf("%d", 5);
+        printf("%d\n", *num_moved);
         ++num_moved;
         --size_num_array;
     }
@@ -37,10 +37,28 @@ int memmov(void* source, void* dest, int source_size, int dest_size){         //
     printf("Entering memmov\n");  // Implicit declaration
     if(source == dest) return 0;
 
-    int* four_ptr_src = (int*) source;
-    int* four_ptr_dst = (int*) dest;                  // Base conditions if memory completely overlaps
+    unsigned int* four_ptr_src = (int*) source;
+    unsigned int* four_ptr_dst = (int*) dest;                  // Base conditions if memory completely overlaps
+
     unsigned int a1 = source;
     unsigned int a2 = dest;
+
+    if(source < dest){                                // If the source is located earlier in memory
+        while(source < a2 && dest_size > 0){
+            *four_ptr_dst = *four_ptr_src;
+            ++four_ptr_dst;
+            ++four_ptr_src;
+            --dest_size;
+        }
+    }
+    else{                                             // If the source is located later in memory
+        while(dest < a1 && dest_size > 0){
+            *four_ptr_dst = *four_ptr_src;
+            ++four_ptr_dst;
+            ++four_ptr_src;
+            --dest_size;
+        }
+    }
 
     printf("a1: %d, a2: %d\n", a1, a2);
 
