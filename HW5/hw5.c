@@ -17,15 +17,15 @@ int memmov(void* source, void* dest, int dest_size, int size_var); // Uses integ
 
 int main(){
 
-    char num_array[9] = {2, 4, 5, 3, 2, 2, 7, 6, 4};
+    double num_array[9] = {2, 4, 5, 3, 2, 2, 7, 6, 4};
 
-    char* num_moved = (char*) malloc(sizeof(char) * 10);
+    double* num_moved = (double*) malloc(sizeof(double) * 9);
 
     memmov(num_array, num_moved, 9, sizeof(num_array[0]));
-
+    
     int size_num_array = sizeof(num_array) / sizeof(num_array[0]);
     while(size_num_array > 0){
-        printf("%d\n", *num_moved);
+        printf("%f\n", *num_moved);
         ++num_moved;
         --size_num_array;
     }
@@ -51,7 +51,7 @@ int memmov(void* source, void* dest, int dest_size, int size_var){         // vo
 
     int total_bytes = dest_size * size_var;
     int amt_char_load = total_bytes % 4;
-    int amt_int_load = total_bytes - amt_char_load;
+    int amt_int_load = (total_bytes - amt_char_load) / sizeof(int);
     if(source < dest){                                // If the source is located earlier in memory
         while(source < dest && amt_int_load > 0){
             *four_ptr_dst = *four_ptr_src;
