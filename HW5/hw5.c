@@ -17,11 +17,11 @@ int memmov(void* source, void* dest, int dest_size, int size_var); // Uses integ
 
 int main(){
 
-    int num_array[10] = {2, 4, 5, 3, 2, 2, 7, 6, 4, 12};
+    char num_array[9] = {2, 4, 5, 3, 2, 2, 7, 6, 4};
 
-    int* num_moved = (int*) malloc(sizeof(int) * 10);
+    char* num_moved = (char*) malloc(sizeof(char) * 10);
 
-    memmov(num_array, num_moved, 10, 4);
+    memmov(num_array, num_moved, 10, sizeof(num_array[0]));
 
     int size_num_array = sizeof(num_array) / sizeof(num_array[0]);
     while(size_num_array > 0){
