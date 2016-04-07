@@ -32,17 +32,18 @@ int main(){
 /**
  * Size of operation used to make adaptability based off int in the current system
  * Assumes memory must be allocated at destination
- * Must add malloc, or else segfault occurs breaking program
  */
 int memmov(void* source, void* dest, int length, int size){         // void pointer to handle any argument
     printf("Entering memmov\n");  // Implicit declaration
+
+    int* four_ptr_src = (int*) source;
+    int* four_ptr_dst = (int*) dest;
+    if(four_ptr_dst == four_ptr_src) return 0;                      // Base conditions if memory completely overlaps
 
     int total_bytes = length * size;                                // Counts total bytes in array
     dest = malloc(total_bytes);
     int num_char_calls = total_bytes % sizeof(int);                 // Amount of char calls to be needed
     int num_int_calls = (total_bytes - num_char_calls) / sizeof(int);// Amount of int* calls needed to increment
-    int* four_ptr_src = (int*) source;
-    int* four_ptr_dst = (int*) dest;
     char* single_ptr_src;
     char* single_ptr_dest;
     while(num_int_calls > 0){
