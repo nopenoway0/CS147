@@ -10,15 +10,15 @@
 //  Determine by the size when to read a byte. If the it ends on an address not divisible by 4 then it can be used
 //  or read by a byte
 
-int memmov(void* source, void* dest, int length, int size); // Uses integer copy instead of byte
+int memmov(void* source, void* dest, int dest_size); // Uses integer copy instead of byte
 
 int main(){
 
-    int num_array[9] = {2, 4, 5, 3, 2, 2, 7, 6, 4};
+    int num_array[10] = {2, 4, 5, 3, 2, 2, 7, 6, 4, 12};
 
     int* num_moved = malloc(sizeof(int) * 10);
 
-    memmov(num_array, num_moved, sizeof(num_array) / sizeof(num_array[0]), 10);
+    memmov(num_array, num_moved, 10);
 
     int size_num_array = sizeof(num_array) / sizeof(num_array[0]);
     while(size_num_array > 0){
@@ -33,7 +33,7 @@ int main(){
  * Size of operation used to make adaptability based off int in the current system
  * Assumes memory must be allocated at destination
  */
-int memmov(void* source, void* dest, int source_size, int dest_size){         // void pointer to handle any argument, size in bytes
+int memmov(void* source, void* dest, int dest_size){         // void pointer to handle any argument, size in bytes
     printf("Entering memmov\n");  // Implicit declaration
     if(source == dest) return 0;
 
