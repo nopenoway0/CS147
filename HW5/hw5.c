@@ -16,9 +16,9 @@ int main(){
 
     int num_array[9] = {2, 4, 5, 3, 2, 2, 7, 6, 4};
 
-    int* num_moved;
+    int* num_moved = 5;
 
-    memmov(num_array, num_moved, sizeof(num_array) / sizeof(num_array[0]), sizeof(int));
+    return memmov(num_array, num_moved, sizeof(num_array) / sizeof(num_array[0]), sizeof(int));
 
     int size_num_array = sizeof(num_array) / sizeof(num_array[0]);
     while(size_num_array > 0){
@@ -33,34 +33,16 @@ int main(){
  * Size of operation used to make adaptability based off int in the current system
  * Assumes memory must be allocated at destination
  */
-int memmov(void* source, void* dest, int length, int size){         // void pointer to handle any argument
+int memmov(void* source, void* dest, int source_size, int dest_size){         // void pointer to handle any argument, size in bytes
     printf("Entering memmov\n");  // Implicit declaration
+    if(source == dest) return 0;
 
     int* four_ptr_src = (int*) source;
-    int* four_ptr_dst = (int*) dest;
-    if(four_ptr_dst == four_ptr_src) return 0;                      // Base conditions if memory completely overlaps
+    int* four_ptr_dst = (int*) dest;                  // Base conditions if memory completely overlaps
+    unsigned int a1 = source;
+    unsigned int a2 = dest;
 
-    int total_bytes = length * size;                                // Counts total bytes in array
-    dest = malloc(total_bytes);
-    int num_char_calls = total_bytes % sizeof(int);                 // Amount of char calls to be needed
-    int num_int_calls = (total_bytes - num_char_calls) / sizeof(int);// Amount of int* calls needed to increment
-    char* single_ptr_src;
-    char* single_ptr_dest;
-    while(num_int_calls > 0){
-        *four_ptr_dst = (unsigned)*four_ptr_src;
-        ++four_ptr_src;
-        ++four_ptr_dst;
-        --num_int_calls;
-    }
-
-    // Character reads
-    single_ptr_src = (char*) four_ptr_src;
-    single_ptr_dest = (char*) four_ptr_dst;
-    while(num_char_calls > 0){
-        ++single_ptr_src;
-        --num_char_calls;
-    }
-    //printf("\nChar calls: %d, Int Calls: %d\n", num_char_calls, num_int_calls);
+    printf("a1: %d, a2: %d\n", a1, a2);
 
     return 1;
 }
