@@ -13,7 +13,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int memmov(void* source, void* dest, int dest_size); // Uses integer copy instead of byte
+int memmov(void* source, void* dest, int dest_size, int size_var); // Uses integer copy instead of byte
 
 int main(){
 
@@ -21,7 +21,7 @@ int main(){
 
     int* num_moved = (int*) malloc(sizeof(int) * 10);
 
-    memmov(num_array, num_moved, 10);
+    memmov(num_array, num_moved, 10, 4);
 
     int size_num_array = sizeof(num_array) / sizeof(num_array[0]);
     while(size_num_array > 0){
@@ -36,7 +36,7 @@ int main(){
  * Size of operation used to make adaptability based off int in the current system
  * Assumes memory must be allocated at destination
  */
-int memmov(void* source, void* dest, int dest_size){         // void pointer to handle any argument, size in bytes
+int memmov(void* source, void* dest, int dest_size, int size_var){         // void pointer to handle any argument, size in bytes
     printf("Entering memmov\n");  // Implicit declaration
     if(source == dest) return 0;
 
@@ -45,21 +45,25 @@ int memmov(void* source, void* dest, int dest_size){         // void pointer to 
 
     unsigned long a1 = (long) &source;
     unsigned long a2 = (long) &dest;
+    
+    int total_bytes = dest_size * size_var;
+    int amt_int_load = total_bytes / 4;
+    int amt_char_load = total_bytes - amt_int_load;
 
     if(source < dest){                                // If the source is located earlier in memory
-        while((long)source < a2 && dest_size > 0){
+        while((long)source < a2 && amt_int_load > 0){
             *four_ptr_dst = *four_ptr_src;
             ++four_ptr_dst;
             ++four_ptr_src;
-            --dest_size;
+            --amt_int_load;
         }
     }
     else{                                             // If the source is located later in memory
-        while((long)dest < a1 && dest_size > 0){
+        while((long)dest < a1 && amt_int_load > 0){
             *four_ptr_dst = *four_ptr_src;
             ++four_ptr_dst;
             ++four_ptr_src;
-            --dest_size;
+            --amt_int_load;
         }
     }
 
