@@ -21,7 +21,7 @@ int main(){
 
     char* num_moved = (char*) malloc(sizeof(char) * 10);
 
-    memmov(num_array, num_moved, 10, sizeof(num_array[0]));
+    memmov(num_array, num_moved, 9, sizeof(num_array[0]));
 
     int size_num_array = sizeof(num_array) / sizeof(num_array[0]);
     while(size_num_array > 0){
@@ -42,19 +42,18 @@ int memmov(void* source, void* dest, int dest_size, int size_var){         // vo
 
     unsigned int* four_ptr_src = (unsigned int*) source;
     unsigned int* four_ptr_dst = (unsigned int*) dest;                  // Base conditions if memory completely overlaps
-    
-    unsigned long a1 = (long) &source;
-    unsigned long a2 = (long) &dest;
-    
+
+    //unsigned long a1 = (long) &source;
+    //unsigned long a2 = (long) &dest;
+
     unsigned char* one_ptr_src;
     unsigned char* one_ptr_dst;
-    
-    int total_bytes = dest_size * size_var;
-    int amt_int_load = total_bytes / 4;
-    int amt_char_load = total_bytes - amt_int_load;
 
+    int total_bytes = dest_size * size_var;
+    int amt_char_load = total_bytes % 4;
+    int amt_int_load = total_bytes - amt_char_load;
     if(source < dest){                                // If the source is located earlier in memory
-        while((long)source < a2 && amt_int_load > 0){
+        while(source < dest && amt_int_load > 0){
             *four_ptr_dst = *four_ptr_src;
             ++four_ptr_dst;
             ++four_ptr_src;
@@ -62,20 +61,20 @@ int memmov(void* source, void* dest, int dest_size, int size_var){         // vo
         }
     }
     else{                                             // If the source is located later in memory
-        while((long)dest < a1 && amt_int_load > 0){
+        while(dest < source && amt_int_load > 0){
             *four_ptr_dst = *four_ptr_src;
             ++four_ptr_dst;
             ++four_ptr_src;
             --amt_int_load;
         }
     }
-    
+
 //  Char loading
     one_ptr_dst = (unsigned char*) four_ptr_dst;
     one_ptr_src = (unsigned char*) four_ptr_src;
-    
+
     if(source < dest){                                // If the source is located earlier in memory
-        while((long)source < a2 && amt_char_load > 0){
+        while(source < dest && amt_char_load > 0){
             *one_ptr_dst = *one_ptr_src;
             ++one_ptr_src;
             ++one_ptr_dst;
@@ -83,13 +82,13 @@ int memmov(void* source, void* dest, int dest_size, int size_var){         // vo
         }
     }
     else{                                             // If the source is located later in memory
-        while((long)dest < a1 && amt_char_load > 0){
+        while(dest < source && amt_char_load > 0){
             *one_ptr_dst = *one_ptr_src;
             ++one_ptr_src;
             ++one_ptr_dst;
             --amt_char_load;
         }
     }
-    
+
     return 1;
 }
