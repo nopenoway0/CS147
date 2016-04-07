@@ -10,13 +10,16 @@
 //  Determine by the size when to read a byte. If the it ends on an address not divisible by 4 then it can be used
 //  or read by a byte
 
+#include <stdio.h>
+#include <stdlib.h>
+
 int memmov(void* source, void* dest, int dest_size); // Uses integer copy instead of byte
 
 int main(){
 
     int num_array[10] = {2, 4, 5, 3, 2, 2, 7, 6, 4, 12};
 
-    int* num_moved = (int*)malloc(sizeof(int) * 10);
+    int* num_moved = (int*) malloc(sizeof(int) * 10);
 
     memmov(num_array, num_moved, 10);
 
@@ -37,14 +40,14 @@ int memmov(void* source, void* dest, int dest_size){         // void pointer to 
     printf("Entering memmov\n");  // Implicit declaration
     if(source == dest) return 0;
 
-    unsigned int* four_ptr_src = (int*) source;
-    unsigned int* four_ptr_dst = (int*) dest;                  // Base conditions if memory completely overlaps
+    unsigned int* four_ptr_src = (unsigned int*) source;
+    unsigned int* four_ptr_dst = (unsigned int*) dest;                  // Base conditions if memory completely overlaps
 
-    unsigned long a1 = &source;
-    unsigned long a2 = &dest;
+    unsigned long a1 = (long) &source;
+    unsigned long a2 = (long) &dest;
 
     if(source < dest){                                // If the source is located earlier in memory
-        while(source < a2 && dest_size > 0){
+        while((long)source < a2 && dest_size > 0){
             *four_ptr_dst = *four_ptr_src;
             ++four_ptr_dst;
             ++four_ptr_src;
