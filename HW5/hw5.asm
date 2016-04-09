@@ -8,6 +8,7 @@
 .align 2
 array1: .word 15 23 19 94 1995 22
 array2: .word 0 0 0 0 0 0
+space: .byte 32
 
 .text
 .globl main
@@ -32,9 +33,15 @@ pa_loop:
 	sll	$t3, $t1, 2
 	add	$t4, $t3, $a0
 	lw	$t3, 0($t4)
+	
 	move	$a0, $t3
 	li	$v0, 1
 	syscall
+	
+	lb	$a0, space
+	li	$v0, 11
+	syscall
+	
 	lw	$a0, 8($sp)
 	addi	$t1, $t1, 1
 	j	pa_loop
