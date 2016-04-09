@@ -9,6 +9,7 @@
 array1: .word 15 23 19 94 1995 22
 array2: .word 0 0 0 0 0 0
 space: .byte 32
+newline: .byte 10
 
 .text
 .globl main
@@ -16,8 +17,47 @@ main:
 	la	$a0, array1
 	la	$a1, 6
 	jal	print_int_array
-	exit
 	
+	la	$a0, array2
+	la	$a1, 6
+	jal 	print_int_array
+	
+	jal	memmov
+
+	la	$a0, array1
+	la	$a1, 6
+	jal	print_int_array
+	
+	la	$a0, array2
+	la	$a1, 6
+	jal 	print_int_array
+	
+	exit
+
+# a0 source address, a1 dest address, a2 length, a3 size of elements	
+memmov:
+	addi	$sp, $sp, -8
+	sw	$fp, 0($sp)
+	
+	beq	$a0, $a1, return
+	move	$t0, $a0	# base source address
+	move	$t1, $a1	# base dest address
+	li	$t2, 0		# Counter
+	
+	slt	$t3, $t0, $t1
+	bnez 	$t3, memmov_loop_2
+memmov_loop_1:			# If Dest is greater, start at source and compare to dest baseline to prevent overlap
+	beq	$t0, $a1, return	# prevents overlap
+	
+	addi	$t2, $t2, 1		# Increment Counter
+	j	return
+memmov_loop_2:			# If source is greater, start at dest and compare to dest baseline to prevent overlap
+	j	return
+return:
+	lw	$fp, 0($sp)
+	addi	$sp, $sp, 8
+	jr	$ra
+
 # a0 is address of the start of the array. a1 is the length	
 print_int_array:
 	move	$t0, $a1
@@ -46,6 +86,10 @@ pa_loop:
 	addi	$t1, $t1, 1
 	j	pa_loop
 pa_loop_end:
+	lb	$a0, newline
+	li	$v0, 11
+	syscall
+	
 	lw	$v0, 0($sp)
 	lw	$fp, 4($sp)
 	lw	$a0, 8($sp)
