@@ -22,6 +22,10 @@ main:
 	la	$a1, 6
 	jal 	print_int_array
 	
+	la	$a1, array2
+	la	$a0, array1
+	la	$a2, 6
+	la	$a3, 4
 	jal	memmov
 
 	la	$a0, array1
@@ -47,12 +51,29 @@ memmov:
 	slt	$t3, $t0, $t1
 	bnez 	$t3, memmov_loop_2
 memmov_loop_1:			# If Dest is greater, start at source and compare to dest baseline to prevent overlap
+	slt	$t5, $t2, $a2
+	beqz	$t5, return
 	beq	$t0, $a1, return	# prevents overlap
-	
+	sll	$t4, $t2, 2
+	add	$t0, $a0, $t4
+	add	$t1, $a1, $t4
+	lw	$t5, 0($t0)
+	sw	$t5, 0($t1)
 	addi	$t2, $t2, 1		# Increment Counter
-	j	return
+	j	memmov_loop_1
+	
 memmov_loop_2:			# If source is greater, start at dest and compare to dest baseline to prevent overlap
-	j	return
+	slt	$t5, $t2, $a2
+	beqz	$t5, return
+	beq	$t1, $a0, return	# prevents overlap
+	sll	$t4, $t2, 2
+	add	$t0, $a0, $t4
+	add	$t1, $a1, $t4
+	lw	$t5, 0($t0)
+	sw	$t5, 0($t1)
+	addi	$t2, $t2, 1		# Increment Counter
+	j	memmov_loop_2
+	
 return:
 	lw	$fp, 0($sp)
 	addi	$sp, $sp, 8
