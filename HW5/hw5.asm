@@ -8,6 +8,8 @@
 .align 2
 array1: .word 15 23 19 94 1995 22
 array2: .word 0 0 0 0 0 0
+array3: .byte 2 3 4 5 6 7
+array4: .byte 3 2 1 4 2 3
 space: .byte 32
 newline: .byte 10
 
